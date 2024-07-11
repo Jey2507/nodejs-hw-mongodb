@@ -6,7 +6,7 @@ export const getAllContacts = async ({page, perPage, sortBy = contactFieldList[0
     const skip = (page - 1) * perPage;
 
     const databaseQuery = ContactColection.find();
-    
+
     if(filter.contactType) {
         databaseQuery.where("contactType").equals(filter.contactType);
     }
@@ -15,8 +15,16 @@ export const getAllContacts = async ({page, perPage, sortBy = contactFieldList[0
         databaseQuery.where("isFavourite").equals(filter.isFavourite);
     }
 
-    const data = await databaseQuery.skip(skip).limit(perPage).sort({[sortBy]: sortOrder});
-    const totalItems = await ContactColection.find().merge(databaseQuery).countDocuments();
+    const [totalItems, data] = await Promise.all([
+        ContactColection.find().merge(databaseQuery).countDocuments(),
+    
+        databaseQuery
+          .skip(skip)
+          .limit(perPage)
+          .sort({ [sortBy]: sortOrder })
+          .exec(),
+      ]);
+
     const {totalPages, hasNextPages, hasPreviousPages } = calcPaginationData({total: totalItems, page, perPage})
 
     return {
