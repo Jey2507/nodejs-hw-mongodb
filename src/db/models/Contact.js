@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { mongoodeSaveError, setUpdateSetting } from "./hooks.js";
 
 const contactSchema = new Schema({
     name: {
@@ -28,5 +29,11 @@ const contactSchema = new Schema({
         versionKey: false,
     }
 )
+
+contactSchema.post("save", mongoodeSaveError)
+
+contactSchema.post("findOneAndUpdate", setUpdateSetting)
+
+contactSchema.post("findOneAndUpdate", mongoodeSaveError)
 
 export const ContactColection = model('contacts', contactSchema);

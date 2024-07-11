@@ -1,8 +1,33 @@
+import { contactFieldList, sortOrderList } from "../constants/index.js";
 import { ContactColection } from "../db/models/Contact.js";
+import calcPaginationData from "../utils/calcPaginationData.js";
 
-export const getAllContacts = async () => {
-    const contacts = await ContactColection.find();
-    return contacts;
+export const getAllContacts = async ({page, perPage, sortBy = contactFieldList[0], sortOrder = sortOrderList[0], filter}) => {
+    const skip = (page - 1) * perPage;
+
+    const databaseQuery = ContactColection.find();
+    
+    if(filter.contactType) {
+        databaseQuery.where("contactType").equals(filter.contactType);
+    }
+
+    if(filter.isFavourite != null) {
+        databaseQuery.where("isFavourite").equals(filter.isFavourite);
+    }
+
+    const data = await databaseQuery.skip(skip).limit(perPage).sort({[sortBy]: sortOrder});
+    const totalItems = await ContactColection.find().merge(databaseQuery).countDocuments();
+    const {totalPages, hasNextPages, hasPreviousPages } = calcPaginationData({total: totalItems, page, perPage})
+
+    return {
+        data,
+        page,        
+        perPage,
+        totalItems,
+        totalPages,
+        hasPreviousPages,
+        hasNextPages,   
+    }
 }
 
 export const getContactById = async (contact) => {
