@@ -7,6 +7,10 @@ export const getAllContacts = async ({page, perPage, sortBy = contactFieldList[0
 
     const databaseQuery = ContactColection.find();
 
+    if(filter.userId) {
+        databaseQuery.where("userId").equals(filter.userId);
+    }
+
     if(filter.contactType) {
         databaseQuery.where("contactType").equals(filter.contactType);
     }
@@ -38,10 +42,7 @@ export const getAllContacts = async ({page, perPage, sortBy = contactFieldList[0
     }
 }
 
-export const getContactById = async (contact) => {
-    const data = await ContactColection.findById(contact);
-    return data;
-}
+export const getContact = filter => ContactColection.findOne(filter);
 
 export const addContact = contact => ContactColection.create(contact);
 

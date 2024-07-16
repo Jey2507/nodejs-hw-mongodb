@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { mongoodeSaveError, setUpdateSetting } from "./hooks.js";
+import { mongooseSaveError, setUpdateSetting } from "./hooks.js";
 
 const contactSchema = new Schema({
     name: {
@@ -22,6 +22,11 @@ const contactSchema = new Schema({
         enum: ["work", "home", "personal"],
         required: true,
         default: "personal"
+    },
+    userId:{
+        type: Schema.Types.ObjectId,
+        ref: "user",
+        required: true,
     }
     },
     {
@@ -30,10 +35,10 @@ const contactSchema = new Schema({
     }
 )
 
-contactSchema.post("save", mongoodeSaveError)
+contactSchema.post("save", mongooseSaveError)
 
-contactSchema.post("findOneAndUpdate", setUpdateSetting)
+contactSchema.pre("findOneAndUpdate", setUpdateSetting)
 
-contactSchema.post("findOneAndUpdate", mongoodeSaveError)
+contactSchema.post("findOneAndUpdate", mongooseSaveError)
 
 export const ContactColection = model('contacts', contactSchema);

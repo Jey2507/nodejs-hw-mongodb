@@ -1,11 +1,13 @@
 import express from "express"
 import pino from "pino-http"
 import cors from "cors"
+import cookieParser from "cookie-parser"
 
 import { env } from "./utils/env.js"
 import notFoundHanler from "./middlewares/notFoundHandler.js"
 import errorHandler from "./middlewares/errorHandler.js"
 import contactRouter from "./routers/contacts.js"
+import authRouter from "./routers/auth.js"
 
 const PORT = env("PORT", "3000")
 
@@ -15,14 +17,17 @@ export const setupServer = () => {
     app.use(express.json());
     app.use(cors())
 
-    app.use(
-        pino({
-            transport: {
-              target: 'pino-pretty',
-            },
-          }),
-    )
+    app.use(cookieParser())
 
+    // app.use(
+    //     pino({
+    //         transport: {
+    //           target: 'pino-pretty',
+    //         },
+    //       }),
+    // )
+
+    app.use("/auth", authRouter)
     app.use("/contacts", contactRouter);
 
     app.use(errorHandler)
