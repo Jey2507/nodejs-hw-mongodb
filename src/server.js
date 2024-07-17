@@ -19,13 +19,13 @@ export const setupServer = () => {
 
     app.use(cookieParser())
 
-    // app.use(
-    //     pino({
-    //         transport: {
-    //           target: 'pino-pretty',
-    //         },
-    //       }),
-    // )
+    app.use(
+        pino({
+            transport: {
+              target: 'pino-pretty',
+            },
+          }),
+    )
 
     app.use("/auth", authRouter)
     app.use("/contacts", contactRouter);
