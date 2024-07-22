@@ -5,6 +5,7 @@ import ctrlWrapper from "../utils/ctrlWrapper.js";
 import validateBody from "../utils/validateBody.js";
 import { contactAddSchema, contactUpdateSchema } from "../validation/validotionSchema.js";
 import authenticate from "../middlewares/authenticate.js";
+import upload from "../middlewares/upload.js";
 
 const contactRouter = express.Router();
 
@@ -14,9 +15,9 @@ contactRouter.get("/", ctrlWrapper(getAllContactsControllers))
 
 contactRouter.get("/:id", isValidId, ctrlWrapper(getContactByIdController))
 
-contactRouter.post("/", validateBody(contactAddSchema), ctrlWrapper(addContactController))
+contactRouter.post("/", upload.single("photo"), validateBody(contactAddSchema), ctrlWrapper(addContactController))
 
-contactRouter.patch("/:id", isValidId, validateBody(contactUpdateSchema),ctrlWrapper(patchContactController))
+contactRouter.patch("/:id", upload.single("photo"), isValidId, validateBody(contactUpdateSchema),ctrlWrapper(patchContactController))
 
 contactRouter.delete("/:id",isValidId, ctrlWrapper(deleteContactByIdController))
 
