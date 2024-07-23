@@ -17,7 +17,7 @@ contactRouter.get("/:id", isValidId, ctrlWrapper(getContactByIdController))
 
 contactRouter.post("/", upload.single("photo"), validateBody(contactAddSchema), ctrlWrapper(addContactController))
 
-contactRouter.patch("/:id", isValidId, validateBody(contactUpdateSchema),ctrlWrapper(patchContactController))
+contactRouter.patch("/:id", isValidId, upload.single("photo"), validateBody(contactUpdateSchema), ctrlWrapper(patchContactController))
 
 contactRouter.delete("/:id",isValidId, ctrlWrapper(deleteContactByIdController))
 

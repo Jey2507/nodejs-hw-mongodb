@@ -76,26 +76,26 @@ export const addContactController = async (req, res) => {
 
 }
 
-export const patchContactController = async (req, res) => {
+export const patchContactController = async (req, res, next) => {
   const {_id: userId} = req.user;
-
-//   let photo = ""
-
-//   if(req.file) {
-//     if(enable_cloudinary === "true") {
-//         photo = await saveFileToCloudinary(req.file, "photos");
-//     }
-//     else {
-//       photo = await saveFileToPublicDir(req.file, "photos");
-//     }
-// }
-
   const { id } = req.params;
 
-  const data = await patchContact({_id: id, userId}, req.body);
+  let photo;
+
+  if(req.file) {
+    if(enable_cloudinary === "true") {
+        photo = await saveFileToCloudinary(req.file, "photos");
+    }
+    else {
+      photo = await saveFileToPublicDir(req.file, "photos");
+    }
+}
+
+  const data = await patchContact({_id: id, userId},{ ...req.body, photo});
 
   if (!data) {
-    throw createHttpError(404, "Contact not found")
+    next(createHttpError(404, "Contact not found"));
+    return;
   }
 
   res.status(200).json({
