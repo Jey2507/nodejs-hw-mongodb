@@ -9,6 +9,7 @@ import errorHandler from "./middlewares/errorHandler.js"
 import contactRouter from "./routers/contacts.js"
 import authRouter from "./routers/auth.js"
 import { PUBLIC_DIR } from "./constants/index.js"
+import swaggerDocs from "./middlewares/swaggerDocs.js"
 
 const PORT = env("PORT", "3000")
 
@@ -28,6 +29,7 @@ export const setupServer = () => {
             },
           }),
     )
+    app.use("/api-docs", swaggerDocs())
 
     app.use("/auth", authRouter)
     app.use("/contacts", contactRouter);
