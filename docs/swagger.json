@@ -14,7 +14,7 @@
       "url": "http://localhost:3000"
     },
     {
-      "url": "https://documentation-jfrb.onrender.com/"
+      "url": "https://documentation-jfrb.onrender.com"
     }
   ],
   "tags": [
@@ -84,7 +84,7 @@
             "name": "isFavourite",
             "schema": {
               "type": "boolean",
-              "example": "false"
+              "example": false
             }
           }
         ],
@@ -241,7 +241,7 @@
                   "properties": {
                     "status": {
                       "type": "integer",
-                      "example": 200
+                      "example": 201
                     },
                     "message": {
                       "type": "string",

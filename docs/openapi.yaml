@@ -14,7 +14,7 @@ tags:
     description: Auth operations.
 servers:
   - url: http://localhost:3000
-  - url: https://documentation-jfrb.onrender.com/
+  - url: https://documentation-jfrb.onrender.com
 paths:
   /contacts: 
     get: 
