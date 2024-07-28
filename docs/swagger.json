@@ -78,6 +78,14 @@
               ],
               "example": "asc"
             }
+          },
+          {
+            "in": "query",
+            "name": "isFavourite",
+            "schema": {
+              "type": "boolean",
+              "example": "false"
+            }
           }
         ],
         "responses": {
@@ -174,15 +182,9 @@
                 "type": "object",
                 "required": [
                   "name",
-                  "phoneNumber",
-                  "email"
+                  "phoneNumber"
                 ],
                 "properties": {
-                  "_id": {
-                    "description": "Contact's id",
-                    "type": "string",
-                    "example": "65e4decdd286b30065d54af9"
-                  },
                   "name": {
                     "description": "Contact's name",
                     "type": "string",
@@ -216,7 +218,8 @@
                   "photo": {
                     "description": "Link to contact's photo",
                     "type": "string",
-                    "example": "<https://res.cloudinary.com/uqwgdu/image/upload/image.png>"
+                    "example": "<https://res.cloudinary.com/uqwgdu/image/upload/image.png>",
+                    "format": "binary"
                   }
                 }
               }
@@ -259,7 +262,7 @@
         }
       }
     },
-    "/students/{id}": {
+    "/contacts/{id}": {
       "get": {
         "tags": [
           "Contacts"
@@ -350,11 +353,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "_id": {
-                    "description": "Contact's id",
-                    "type": "string",
-                    "example": "65e4decdd286b30065d54af9"
-                  },
                   "name": {
                     "description": "Contact's name",
                     "type": "string",
@@ -388,7 +386,8 @@
                   "photo": {
                     "description": "Link to contact's photo",
                     "type": "string",
-                    "example": "<https://res.cloudinary.com/uqwgdu/image/upload/image.png>"
+                    "example": "<https://res.cloudinary.com/uqwgdu/image/upload/image.png>",
+                    "format": "binary"
                   }
                 }
               }
