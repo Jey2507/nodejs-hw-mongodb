@@ -63,7 +63,7 @@
             "name": "sortBy",
             "schema": {
               "type": "string",
-              "example": "isFavourite"
+              "example": "name"
             },
             "description": "All contacts's fields can be mentioned. Default value - _id"
           },
@@ -203,7 +203,7 @@
                   "isFavourite": {
                     "description": "Is contact favorite",
                     "type": "boolean",
-                    "example": true
+                    "example": false
                   },
                   "contactType": {
                     "description": "Contact's type",

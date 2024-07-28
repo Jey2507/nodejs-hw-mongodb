@@ -20,7 +20,7 @@ parameters:
     name: sortBy
     schema:
       type: string
-      example: 'isFavourite'
+      example: 'name'
     description: "All contacts's fields can be mentioned. Default value - _id"
   - in: query
     name: sortOrder
